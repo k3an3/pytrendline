@@ -45,9 +45,9 @@ class CandlestickData():
 
     # Datetime column provide exists and is of type datetime (or index is of type datetime if arg is None)
     if datetime_col == None:
-      if not is_datetime(df.index): 
+      if not is_datetime(df.index):
         raise Exception(
-          "If no datetime_col is provided to CandlestickData constructor, the df index must be of datetime type.\n" + 
+          "If no datetime_col is provided to CandlestickData constructor, the df index must be of datetime type.\n" +
           "Instead received df index of {} type".format(str(type(df.index)))
         )
     else:
@@ -72,12 +72,10 @@ class CandlestickData():
 
     # Force index to be monotinically increasing int
     if datetime_col == None:
-      self.df.set_index(datetime_col)
-      self.df = self.df.rename(columns = {'index':'Date'})
+      self.df.reset_index(inplace=True, names="Date")
     else:
       self.df.rename(columns={datetime_col: "Date"})
-    
-    self.df.reset_index()
+      self.df.reset_index()
 
     self.time_interval = time_interval
     self.open_col = open_col
